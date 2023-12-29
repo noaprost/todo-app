@@ -1,0 +1,19 @@
+.toDos {
+  background-color: #23243b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.toDos div {
+  padding: 0.5rem;
+}
+
+.toDos input {
+  margin-right: 0.5rem;
+}
+
+.toDos input:hover {
+  cursor: pointer;
+}

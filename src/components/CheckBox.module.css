@@ -1,0 +1,23 @@
+.checkBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text {
+  display: flex;
+}
+
+.iconBtn {
+  border-radius: 100%;
+  background: none;
+  border-style: none;
+}
+
+.iconBtn:hover {
+  cursor: pointer;
+}
+
+.icon {
+  color: white;
+}
