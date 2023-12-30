@@ -1,29 +1,30 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-export const ToDoContext = createContext();
+const ToDoContext = createContext();
 
 export function ToDoProvider({ children }) {
-  const [nowToDo, setNowToDo] = useState(initialToDos);
-  const [allToDo, setAllToDo] = useState(nowToDo);
-  const [activeToDo, setActiveToDo] = useState(nowToDo);
-  const [completedToDo, setCompletedToDo] = useState([]);
+  const [todos, setTodos] = useState([
+    { id: "", text: "할 일을 추가해주세요", status: "active" },
+  ]);
+  const handleTodos = (newTodos) => {
+    setTodos(newTodos);
+    localStorage.todos = todos;
+  };
 
+  console.log(localStorage.todos);
+
+  useEffect(() => {
+    if (!("todos" in localStorage)) {
+      setTodos(localStorage.todos);
+    } else {
+      localStorage.setItem("todos", todos);
+    }
+  }, []);
   return (
-    <ToDoContext.Provider
-      value={{
-        nowToDo,
-        setNowToDo,
-        allToDo,
-        setAllToDo,
-        activeToDo,
-        setActiveToDo,
-        completedToDo,
-        setCompletedToDo,
-      }}
-    >
+    <ToDoContext.Provider value={{ todos, handleTodos }}>
       {children}
     </ToDoContext.Provider>
   );
 }
 
-const initialToDos = ["공부하기", "운동가기", "투두 앱 만들기", "일찍 자기"];
+export const useTodos = () => useContext(ToDoContext);
