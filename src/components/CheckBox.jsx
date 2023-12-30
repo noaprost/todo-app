@@ -4,10 +4,13 @@ import { FaRegTrashCan } from "react-icons/fa6";
 
 export default function CheckBox({ id, text, handleCheckedItem }) {
   const [checked, setChecked] = useState(false);
+
   const handleChecked = ({ target }) => {
     setChecked((prev) => !prev);
+    console.log(`id : ${id}`);
     handleCheckedItem(target.id, target.isChecked);
   };
+
   return (
     <div className={styles.checkBox}>
       <label htmlFor={id} className={styles.text}>

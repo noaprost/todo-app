@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CheckBox from "./CheckBox";
 import styles from "./ToDoList.module.css";
+import { ToDoContext } from "../context/ToDoContext";
 
 export default function ToDoList() {
-  const [checkItems, setCheckItems] = useState(new Set());
-  const [allToDo, setAllToDo] = useState(initialToDos);
-  const [doneToDo, setDoneToDo] = useState([]);
-  const [activeToDo, setActiveToDo] = useState([]);
+  const [checkItems, setCheckItems] = useState([]);
+  const {
+    nowToDo,
+    allToDo,
+    activeToDo,
+    setActiveToDo,
+    completedToDo,
+    setCompletedToDo,
+  } = useContext(ToDoContext);
 
   const handleCheckedItem = (id, isChecked) => {
     if (isChecked) {
-      checkItems.add(id);
-      setCheckItems(checkItems);
+      setCheckItems([...checkItems, id]);
+      console.log(`checkItems : ${checkItems}, id : ${id}`);
     } else {
-      checkItems.delete(id);
-      setCheckItems(checkItems);
+      setCheckItems(checkItems.filter((item) => item !== id));
+      console.log(`checkItems : ${checkItems}, id : ${id}`);
     }
   };
+
   return (
     <div className={styles.toDos}>
-      {allToDo.map((text, index) => (
+      {nowToDo.map((text, index) => (
         <CheckBox
           key={index}
-          id={`id` + index}
+          id={index}
           text={text}
           handleCheckedItem={handleCheckedItem}
         />
@@ -30,5 +37,3 @@ export default function ToDoList() {
     </div>
   );
 }
-
-const initialToDos = ["공부하기", "운동가기", "투두 앱 만들기", "일찍 자기"];
