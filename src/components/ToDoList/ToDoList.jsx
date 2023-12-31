@@ -4,7 +4,9 @@ import Todo from "../Todo/Todo";
 import styles from "./ToDoList.module.css";
 
 export default function ToDoList({ filter }) {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(
+    JSON.parse(localStorage.todos ?? null) ?? []
+  );
 
   // 새로운 todo를 받아와서 todos에 업데이트 해주는 함수
   const handleAdd = (todo) => {
@@ -19,6 +21,10 @@ export default function ToDoList({ filter }) {
   const handleDelete = (deleted) => {
     setTodos(todos.filter((todo) => todo.id !== deleted.id));
   };
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const filtered = getFilteredItems(todos, filter);
 
